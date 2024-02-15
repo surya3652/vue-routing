@@ -23,10 +23,16 @@ const routes = [
     path: "/draggable",
     name: "Draggable",
     component: () => import("./components/Draggable.vue"),
-  }
+  },
+  {
+    path: "/draggablesandbox",
+    name: "DraggableSandbox",
+    component: () => import("./components/DraggableSandbox.vue"),
+  },
 ];
 
 const router = new VueRouter({
+  mode: "history",
   routes,
 });
 

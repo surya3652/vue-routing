@@ -5,6 +5,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/color">Auto Color Picker</router-link> |
       <router-link to="/draggable">Draggable Demo</router-link> |
+      <router-link to="/draggablesandbox">Draggable Sandbox</router-link> |
       <router-link to="/about">About</router-link>
     </div>
     <router-view />
