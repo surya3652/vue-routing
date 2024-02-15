@@ -5,7 +5,7 @@
         <div class="rangebar">
           <input type="range" min="1" max="4" v-model="value" />
           <span>{{ value }}</span>
-          <button @click="fun()" class="btn btn-primary">ok</button>
+          <button @click="find_range()" class="btn btn-primary">ok</button>
         </div>
       </div>
       <div class="row">
@@ -13,16 +13,20 @@
           <draggable
             style="min-height: 112px"
             class="draggable-list1"
-            :list="list1"
-            :group="{ name: 'mygroup', put: true }"
-            :move="detect"
+            v-model="list1"
+            :group="{ name: 'mygroup1' }"
+            @end="detect"
           >
-            <li class="list-item" v-for="element in list1" :key="element">
+            <li
+              class="list-item"
+              v-for="(element, index) in list1"
+              :key="index"
+            >
               <i
                 class="fa-solid fa-ellipsis-vertical icon"
                 @click="show = true"
               ></i>
-              {{ element }}
+              {{ element.name }}
             </li>
           </draggable>
         </div>
@@ -30,16 +34,20 @@
           <draggable
             style="min-height: 112px"
             class="draggable-list2"
-            :list="list2"
-            :group="{ name: 'mygroup', put: true }"
-            :move="detect"
+            v-model="list2"
+            :group="{ name: 'mygroup1' }"
+            @end="detect"
           >
-            <li class="list-item" v-for="element in list2" :key="element">
+            <li
+              class="list-item"
+              v-for="(element, index) in list2"
+              :key="index"
+            >
               <i
                 class="fa-solid fa-ellipsis-vertical icon"
                 @click="show = true"
               ></i>
-              {{ element }}
+              {{ element.name }}
             </li>
           </draggable>
         </div>
@@ -58,19 +66,34 @@ export default {
   },
   data() {
     return {
-      list1: ["A", "B", "C", "D"],
-      list2: [1, 2, 3, 4],
+      list1: [
+        { name: "A", size: 1 },
+        { name: "B", size: 1 },
+        { name: "C", size: 1 },
+        { name: "D", size: 1 },
+      ],
+      list2: [
+        { name: 1, size: 1 },
+        { name: 2, size: 1 },
+        { name: 3, size: 1 },
+        { name: 4, size: 1 },
+      ],
       value: 1,
-      expand: [],
+      current_index: 0,
+      current_list: "",
       show: false,
     };
   },
   methods: {
-    fun() {
+    find_range() {
       this.show = false;
     },
-    detect: (event) => {
-        console.log(event)
+    detect(event) {
+      console.log(event);
+      console.log(this.list1);
+      console.log(this.list2);
+      console.log(this.current_index)
+      console.log(this.current_list)
     },
   },
 };
@@ -140,7 +163,6 @@ span {
 }
 
 .slider {
-  -webkit-appearance: none;
   width: 100%;
   height: 25px;
   background: #ffffff;

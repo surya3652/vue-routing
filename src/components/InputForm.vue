@@ -2,8 +2,8 @@
   <div>
     <form @submit.prevent="" action="">
       <input required v-model="input" type="text" />
-      <button @click="trigger()">Show</button>
-      <button @click="reset()">Reset</button>
+      <button class="btn btn-primary" @click="trigger()">Show</button>
+      <button class="btn btn-danger" @click="reset()">Reset</button>
     </form>
   </div>
 </template>
@@ -33,7 +33,10 @@ export default {
 };
 </script>
 <style scoped>
-*{
+* {
   margin: 5px;
+}
+input {
+  padding: 5px;
 }
 </style>
