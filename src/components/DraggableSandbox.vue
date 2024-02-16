@@ -1,13 +1,6 @@
 <template>
   <main>
     <div class="container">
-      <div v-if="show" class="slidecontainer">
-        <div class="rangebar">
-          <input type="range" min="1" max="4" v-model="size" />
-          <span>{{ size }}</span>
-          <button @click="assign_style()" class="btn btn-primary">ok</button>
-        </div>
-      </div>
       <div class="row">
         <div class="col-lg-12">
           <draggable
@@ -26,7 +19,16 @@
               <i
                 class="fa-solid fa-ellipsis-vertical icon"
                 @click="set_size(list1, index)"
-              ></i>
+                ><div v-if="show" class="slidecontainer">
+                  <div class="rangebar">
+                    <input type="range" min="1" max="4" v-model="size" />
+                    <span>{{ size }}</span>
+                    <button @click="assign_style()" class="btn btn-primary">
+                      ok
+                    </button>
+                  </div>
+                </div></i
+              >
               {{ element.name }}
             </li>
           </draggable>
@@ -131,9 +133,9 @@ h3 {
   margin: 30px 250px;
 }
 .icon {
-  background-color: black;
-  border: 4px solid black;
-  border-radius: 600px;
+  /* background-color: black; */
+  /* border: 4px solid black; */
+  /* border-radius: 600px; */
   position: absolute;
   right: 1%;
   top: 1px;
@@ -153,10 +155,10 @@ h3 {
 }
 
 .rangebar {
-  padding: 10px;
-  border-radius: 10px;
+  /* padding: 10px; */
+  /* border-radius: 10px; */
   display: inline-block;
-  background-color: #e6a4b4;
+  /* background-color: #e6a4b4; */
 }
 span {
   padding: 5px;
@@ -171,7 +173,7 @@ span {
 
 .slider {
   width: 100%;
-  height: 25px;
+  height: 10px;
   background: #ffffff;
   outline: none;
   opacity: 0.7;
@@ -186,8 +188,8 @@ span {
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 25px;
-  height: 25px;
+  width: 15px;
+  height: 15px;
   background: #04aa6d;
   cursor: pointer;
 }
