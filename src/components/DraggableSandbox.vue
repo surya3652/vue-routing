@@ -3,9 +3,9 @@
     <div class="container">
       <div v-if="show" class="slidecontainer">
         <div class="rangebar">
-          <input type="range" min="1" max="4" v-model="value" />
-          <span>{{ value }}</span>
-          <button @click="find_range()" class="btn btn-primary">ok</button>
+          <input type="range" min="1" max="4" v-model="size" />
+          <span>{{ size }}</span>
+          <button @click="assign_style()" class="btn btn-primary">ok</button>
         </div>
       </div>
       <div class="row">
@@ -14,17 +14,18 @@
             style="min-height: 112px"
             class="draggable-list1"
             v-model="list1"
-            :group="{ name: 'mygroup1' }"
-            @end="detect"
+            :group="{ name: 'mygroup' }"
+            @change="detect"
           >
             <li
               class="list-item"
               v-for="(element, index) in list1"
+              :style="element.dynamic_style"
               :key="index"
             >
               <i
                 class="fa-solid fa-ellipsis-vertical icon"
-                @click="show = true"
+                @click="set_size(list1, index)"
               ></i>
               {{ element.name }}
             </li>
@@ -35,17 +36,18 @@
             style="min-height: 112px"
             class="draggable-list2"
             v-model="list2"
-            :group="{ name: 'mygroup1' }"
-            @end="detect"
+            :group="{ name: 'mygroup' }"
+            @change="detect"
           >
             <li
               class="list-item"
               v-for="(element, index) in list2"
+              :style="element.dynamic_style"
               :key="index"
             >
               <i
                 class="fa-solid fa-ellipsis-vertical icon"
-                @click="show = true"
+                @click="set_size(list2, index)"
               ></i>
               {{ element.name }}
             </li>
@@ -67,33 +69,38 @@ export default {
   data() {
     return {
       list1: [
-        { name: "A", size: 1 },
-        { name: "B", size: 1 },
-        { name: "C", size: 1 },
-        { name: "D", size: 1 },
+        { name: "A", size: 1, dynamic_style: "" },
+        { name: "B", size: 1, dynamic_style: "" },
+        { name: "C", size: 1, dynamic_style: "" },
+        { name: "D", size: 1, dynamic_style: "" },
       ],
       list2: [
-        { name: 1, size: 1 },
-        { name: 2, size: 1 },
-        { name: 3, size: 1 },
-        { name: 4, size: 1 },
+        { name: 1, size: 1, dynamic_style: "" },
+        { name: 2, size: 1, dynamic_style: "" },
+        { name: 3, size: 1, dynamic_style: "" },
+        { name: 4, size: 1, dynamic_style: "" },
       ],
-      value: 1,
-      current_index: 0,
-      current_list: "",
+      size: 1,
       show: false,
+      dynamic_style: "",
     };
   },
   methods: {
-    find_range() {
+    assign_style() {
       this.show = false;
+      this.dynamic_style = `flex: 0 0 calc(${this.size * 25}% - 10px)`;
+    },
+    set_size(list, index) {
+      this.show = true;
+      console.log(index);
+      list[index].size = this.size;
+      list[index].dynamic_style = this.dynamic_style;
+      console.log(JSON.parse(JSON.stringify(list)));
     },
     detect(event) {
       console.log(event);
-      console.log(this.list1);
-      console.log(this.list2);
-      console.log(this.current_index)
-      console.log(this.current_list)
+      // console.log(this.list1);
+      // console.log(this.list2);
     },
   },
 };
@@ -141,7 +148,7 @@ h3 {
   border-radius: 5px;
   border: 2px solid black;
   background: linear-gradient(#32294d, #6b5e9a, #ab9bd8);
-  flex: 1 0 calc(25% - 10px);
+  flex: 0 0 calc(25% - 10px);
   display: inline-flex;
 }
 
@@ -195,3 +202,32 @@ span {
 
 <!-- pull option to clone means that dragging an element out of this list will clone the element and not move it permanently out of the list.
   And setting put to false means we can’t drag new elements into this group. -->
+
+<!-- <li class="list-item">
+              {{ list1[0].name }}
+              <i
+                class="fa-solid fa-ellipsis-vertical icon"
+                @click="show = true"
+              ></i>
+            </li>
+            <li class="list-item1">
+              {{ list1[1].name }}
+              <i
+                class="fa-solid fa-ellipsis-vertical icon"
+                @click="show = true"
+              ></i>
+            </li>
+            <li class="list-item2">
+              {{ list1[2].name }}
+              <i
+                class="fa-solid fa-ellipsis-vertical icon"
+                @click="show = true"
+              ></i>
+            </li>
+            <li class="list-item3">
+              {{ list1[3].name }}
+              <i
+                class="fa-solid fa-ellipsis-vertical icon"
+                @click="show = true"
+              ></i>
+            </li> -->
