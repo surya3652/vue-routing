@@ -94,13 +94,14 @@ export default {
   },
   methods: {
     assign_style() {
-      this.show = false;
+      this.show = false; 
       this.current_list[this.current_index].width = this.width;
       this.current_list[this.current_index].height = this.height;
       this.current_list[this.current_index].dynamic_style = `flex: 0 0 calc(${
         this.width * 25
       }% - 10px);`;
     },
+    
     menu(list, index) {
       this.show = true;
       this.current_list = list;
