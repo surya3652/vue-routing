@@ -95,11 +95,13 @@ export default {
   methods: {
     assign_style() {
       this.show = false;
+      // const flexbasis = `flex: 0 0 calc(${this.width * 25}% - 10px);`;
+      // const height = `height : calc(${this.height * 25}% - 100px)`;
       this.current_list[this.current_index].width = this.width;
       this.current_list[this.current_index].height = this.height;
       this.current_list[this.current_index].dynamic_style = `flex: 0 0 calc(${
         this.width * 25
-      }% - 10px);`;
+      }% - 10px); height : calc(${this.height * 105}px);`;
     },
     menu(list, index) {
       this.show = true;
@@ -138,6 +140,7 @@ h3 {
   border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 .icon {
   background-color: black;
