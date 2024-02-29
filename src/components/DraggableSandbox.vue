@@ -3,8 +3,15 @@
     <div class="container">
       <div v-if="show" class="slidecontainer">
         <div class="rangebar">
-          <input type="range" min="1" max="4" v-model="size" />
-          <span>{{ size }}</span>
+          Width : <input type="range" min="1" max="4" v-model="width" /><span>{{
+            width
+          }}</span
+          ><br /><br />
+          Height :
+          <input type="range" min="1" max="4" v-model="height" /><span>{{
+            height
+          }}</span
+          ><br />
           <button @click="assign_style()" class="btn btn-primary">ok</button>
         </div>
       </div>
@@ -15,7 +22,6 @@
             class="draggable-list1"
             v-model="list1"
             :group="{ name: 'mygroup' }"
-            @change="detect"
           >
             <li
               class="list-item"
@@ -25,7 +31,7 @@
             >
               <i
                 class="fa-solid fa-ellipsis-vertical icon"
-                @click="set_size(list1, index)"
+                @click="menu(list1, index)"
               ></i>
               {{ element.name }}
             </li>
@@ -37,7 +43,6 @@
             class="draggable-list2"
             v-model="list2"
             :group="{ name: 'mygroup' }"
-            @change="detect"
           >
             <li
               class="list-item"
@@ -47,7 +52,7 @@
             >
               <i
                 class="fa-solid fa-ellipsis-vertical icon"
-                @click="set_size(list2, index)"
+                @click="menu(list2, index)"
               ></i>
               {{ element.name }}
             </li>
@@ -69,38 +74,42 @@ export default {
   data() {
     return {
       list1: [
-        { name: "A", size: 1, dynamic_style: "" },
-        { name: "B", size: 1, dynamic_style: "" },
-        { name: "C", size: 1, dynamic_style: "" },
-        { name: "D", size: 1, dynamic_style: "" },
+        { name: "A", width: 1, height: 1, dynamic_style: "" },
+        { name: "B", width: 1, height: 1, dynamic_style: "" },
+        { name: "C", width: 1, height: 1, dynamic_style: "" },
+        { name: "D", width: 1, height: 1, dynamic_style: "" },
       ],
       list2: [
-        { name: 1, size: 1, dynamic_style: "" },
-        { name: 2, size: 1, dynamic_style: "" },
-        { name: 3, size: 1, dynamic_style: "" },
-        { name: 4, size: 1, dynamic_style: "" },
+        { name: 1, width: 1, height: 1, dynamic_style: "" },
+        { name: 2, width: 1, height: 1, dynamic_style: "" },
+        { name: 3, width: 1, height: 1, dynamic_style: "" },
+        { name: 4, width: 1, height: 1, dynamic_style: "" },
       ],
-      size: 1,
+      width: 1,
+      height: 0,
       show: false,
-      dynamic_style: "",
+      current_list: [],
+      current_index: 0,
     };
   },
   methods: {
     assign_style() {
       this.show = false;
-      this.dynamic_style = `flex: 0 0 calc(${this.size * 25}% - 10px)`;
+      // const flexbasis = `flex: 0 0 calc(${this.width * 25}% - 10px);`;
+      // const height = `height : calc(${this.height * 25}% - 100px)`;
+      this.current_list[this.current_index].width = this.width;
+      this.current_list[this.current_index].height = this.height;
+      this.current_list[this.current_index].dynamic_style = `flex: 0 0 calc(${
+        this.width * 25
+      }% - 10px); height : calc(${this.height * 105}px);`;
     },
-    set_size(list, index) {
+    menu(list, index) {
       this.show = true;
-      console.log(index);
-      list[index].size = this.size;
-      list[index].dynamic_style = this.dynamic_style;
-      console.log(JSON.parse(JSON.stringify(list)));
-    },
-    detect(event) {
-      console.log(event);
-      // console.log(this.list1);
-      // console.log(this.list2);
+      this.current_list = list;
+      this.current_index = index;
+      this.width = list[index].width;
+      this.height = list[index].height;
+      console.log(this.current_list);
     },
   },
 };
@@ -119,16 +128,19 @@ h3 {
 .btn {
   border-radius: 250px;
   margin-left: 10px;
+  margin-top: 5px;
 }
+
 .draggable-list1,
 .draggable-list2 {
   background: #42b983;
+  margin: 30px 250px;
   color: #fff;
   border: 1px solid;
   border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
-  margin: 30px 250px;
+  align-items: flex-start;
 }
 .icon {
   background-color: black;
@@ -140,9 +152,9 @@ h3 {
 }
 
 .list-item {
-  position: relative;
   margin: 5px;
   padding: 35px;
+  position: relative;
   cursor: pointer;
   font-size: 18px;
   border-radius: 5px;
@@ -152,12 +164,6 @@ h3 {
   display: inline-flex;
 }
 
-.rangebar {
-  padding: 10px;
-  border-radius: 10px;
-  display: inline-block;
-  background-color: #e6a4b4;
-}
 span {
   padding: 5px;
   border: 2px solid;
@@ -167,6 +173,13 @@ span {
 }
 .slidecontainer {
   width: 100%;
+}
+
+.rangebar {
+  padding: 10px;
+  border-radius: 10px;
+  display: inline-block;
+  background-color: #66f35c;
 }
 
 .slider {
